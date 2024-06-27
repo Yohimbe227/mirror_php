@@ -1,0 +1,6 @@
+---
+- name: Copy Nginx configuration
+  copy:
+    src: nginx.conf
+    dest: /opt/wordpress/nginx.conf
+    mode: '0644'
