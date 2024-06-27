@@ -2,5 +2,6 @@ all:
   hosts:
     server:
       ansible_host: 37.230.117.72
+      ansible_port: 2220
       ansible_user: root
     #  ansible_ssh_private_key_file: ./path
