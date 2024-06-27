@@ -5,9 +5,8 @@
     - role: nginx
       tags: nginx
 
-
     - role: docker
       tags: docker
 
-
-#    - wordpress
+    - wordpress
+    - tags: wordpress
