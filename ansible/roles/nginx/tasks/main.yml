@@ -1,7 +1,7 @@
 ---
 - name: Create SSL directory
   file:
-    path: "{{ ssl_dir }}/{{ ssl_domain }}"
+    path: "{{ ssl_dir }}/{{ servername }}"
     state: directory
     mode: '0755'
 
@@ -45,7 +45,7 @@
     state_or_province_name: "{{ ssl_state }}"
     locality_name: "{{ ssl_city }}"
     organization_name: "{{ ssl_org }}"
-    common_name: "{{ ssl_domain }}"
+    common_name: "{{ servername }}"
 
 - name: "Generate self-signed certificate for domain"
   openssl_certificate:
@@ -61,9 +61,6 @@
     src: nginx_template.j2
     dest: "{{ config_file }}"
     mode: "0644"
-  vars:
-    server_name: "{{ server_name }}"
-    is_selfsigned_cet: "{{ is_selfsigned_cert }}"
   notify:
     - Restart nginx 2
 
