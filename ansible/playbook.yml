@@ -8,5 +8,5 @@
     - role: docker
       tags: docker
 
-    - wordpress
-    - tags: wordpress
+    - role: wordpress
+      tags: wordpress
