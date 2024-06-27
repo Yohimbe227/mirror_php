@@ -1,6 +1,23 @@
 ---
-- name: Copy Nginx configuration
+- name: Create project directory
+  file:
+    path: /opt/wordpress
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose.yml
   copy:
-    src: nginx.conf
-    dest: /opt/wordpress/nginx.conf
+    src: files/docker-compose.yml
+    dest: /opt/wordpress/docker-compose.yml
     mode: '0644'
+
+- name: Copy Dockerfile
+  copy:
+    src: files/Dockerfile
+    dest: /opt/wordpress/Dockerfile
+    mode: '0644'
+
+- name: Deploy WordPress with Docker Compose
+  community.docker.docker_compose:
+    project_src: /opt/wordpress
+    state: present

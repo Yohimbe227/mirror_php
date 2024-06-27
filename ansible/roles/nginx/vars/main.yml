@@ -1,2 +1,20 @@
----
-# vars file for nginx
+packages:
+  - nginx
+  - htop
+  - tree
+nginx_template: "./templates/nginx_template.j2"
+
+ssl_dir: "/etc/letsencrypt"
+
+config_file: "/opt/wordpress/nginx/nginx.conf",
+
+ssl_key_file: "{{ ssl_dir }}/{{ ssl_domain }}/self_signed.key"
+ssl_csr_file: "{{ ssl_dir }}/{{ ssl_domain }}/self_signed.csr"
+ssl_cert_file: "{{ ssl_dir }}/{{ ssl_domain }}/self_signed.crt"
+ssl_days: 365
+ssl_country: "US"
+ssl_state: "California"
+ssl_city: "San Francisco"
+ssl_org: "Example Company"
+
+cron_job_command: "openssl x509 -req -in {{ssl_csr_file}} -signkey {{ssl_key_file}} -out {{ ssl_cert_file }} -days 365 -sha256"

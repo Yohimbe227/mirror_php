@@ -1,2 +1,67 @@
 ---
-# tasks file for nginx
+- name: Create SSL directory
+  file:
+    path: "{{ ssl_dir }}/{{ ssl_domain }}"
+    state: directory
+    mode: '0755'
+
+- name: "Check if private key exists for domain"
+  stat:
+    path: "{{ ssl_key_file }}"
+  register: key_file_stat
+
+- debug:
+    msg: "{{ ssl_key_file }}" уже был создан, но мы его перезапишем
+  when: key_file_stat
+
+- name: "Check if CSR exists for domain"
+  stat:
+    path: "{{ ssl_csr_file }}"
+  register: csr_file_stat
+
+- debug:
+    msg: "{{ ssl_csr_file }}" уже был создан, но мы его перезапишем
+  when: csr_file_stat
+
+- name: "Check if certificate exists for domain"
+  stat:
+    path: "{{ ssl_cert_file }}"
+  register: cert_file_stat
+
+- debug:
+    msg: "{{ ssl_key_file }}" уже был создан, но мы его перезапишем
+  when: csr_file_stat
+
+- name: "Generate private key for domain"
+  openssl_privatekey:
+    path: "{{ ssl_key_file }}"
+    size: 2048
+
+- name: "Generate self-signed certificate for domain"
+  openssl_certificate:
+    path: "{{ ssl_cert_file }}"
+    privatekey_path: "{{ ssl_key_file }}"
+    csr_path: "{{ ssl_csr_file }}"
+    provider: selfsigned
+    selfsigned_digest: sha256
+    selfsigned_not_after: "+{{ ssl_days }}d"
+  when: not cert_file_stat.stat.exists
+
+- name: Configure Nginx config for domain
+  template:
+    src: nginx_template.j2
+    dest: "{{ config_file }}"
+    mode: "0644"
+  vars:
+    server_name: "{{ server_name }}"
+    is_selfsigned_cet: "{{ is_selfsigned_cet }}"
+  notify:
+    - Restart nginx 2
+
+- name: Ensure self-signed certificate renewal in cron
+  cron:
+    name: "Renew self-signed certificate"
+    special_time: daily
+    job: "{{ cron_job_command }}"
+    state: present
+  when: nginx_selfsigned_cert_renewal

@@ -1,2 +1,3 @@
 ---
-# defaults file for nginx
+ssl_domain: "yohimbe25-proxied-students.devboxops.xyz"
+is_selfsigned_cert: true
