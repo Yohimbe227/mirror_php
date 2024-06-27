@@ -37,6 +37,16 @@
     path: "{{ ssl_key_file }}"
     size: 2048
 
+- name: "Generate CSR for domain"
+  openssl_csr:
+    path: "{{ ssl_csr_file }}"
+    privatekey_path: "{{ ssl_key_file }}"
+    country_name: "{{ ssl_country }}"
+    state_or_province_name: "{{ ssl_state }}"
+    locality_name: "{{ ssl_city }}"
+    organization_name: "{{ ssl_org }}"
+    common_name: "{{ ssl_domain }}"
+
 - name: "Generate self-signed certificate for domain"
   openssl_certificate:
     path: "{{ ssl_cert_file }}"
@@ -45,7 +55,6 @@
     provider: selfsigned
     selfsigned_digest: sha256
     selfsigned_not_after: "+{{ ssl_days }}d"
-  when: not cert_file_stat.stat.exists
 
 - name: Configure Nginx config for domain
   template:
