@@ -30,12 +30,12 @@
     state: present
   become: yes
 
-#- name: Deploy WordPress with Docker Compose
-#  community.docker.docker_compose_v2:
-#    project_src: /opt/wordpress
-#    state: present
-#    timeout: 300
-#  register: compose_result
+- name: Deploy WordPress with Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: /opt/wordpress
+    state: present
+    timeout: 300
+  register: compose_result
 #
 #- name: Debug Docker Compose result
 #  debug:
