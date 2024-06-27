@@ -6,7 +6,7 @@ nginx_template: "./templates/nginx_template.j2"
 
 ssl_dir: "/etc/letsencrypt"
 
-config_file: "/opt/wordpress/nginx/nginx.conf",
+config_file: "/opt/wordpress/nginx/nginx.conf"
 
 ssl_key_file: "{{ ssl_dir }}/{{ ssl_domain }}/self_signed.key"
 ssl_csr_file: "{{ ssl_dir }}/{{ ssl_domain }}/self_signed.csr"
