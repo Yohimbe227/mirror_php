@@ -63,7 +63,7 @@
     mode: "0644"
   vars:
     server_name: "{{ server_name }}"
-    is_selfsigned_cet: "{{ is_selfsigned_cet }}"
+    is_selfsigned_cet: {{ is_selfsigned_cert }}
   notify:
     - Restart nginx 2
 
