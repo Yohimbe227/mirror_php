@@ -27,6 +27,7 @@
   pip:
     name:
       - docker
+      - docker-compose
     state: present
   become: yes
 
