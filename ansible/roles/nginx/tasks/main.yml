@@ -5,6 +5,12 @@
     state: directory
     mode: '0755'
 
+- name: Create project directory
+  file:
+    path: /opt/wordpress/nginx
+    state: directory
+    mode: '0755'
+
 - name: "Check if private key exists for domain"
   stat:
     path: "{{ ssl_key_file }}"
