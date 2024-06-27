@@ -11,7 +11,7 @@
   register: key_file_stat
 
 - debug:
-    msg: "{{ ssl_key_file }}" уже был создан, но мы его перезапишем
+    msg: "{{ ssl_key_file }} уже был создан, но мы его перезапишем"
   when: key_file_stat
 
 - name: "Check if CSR exists for domain"
@@ -20,7 +20,7 @@
   register: csr_file_stat
 
 - debug:
-    msg: "{{ ssl_csr_file }}" уже был создан, но мы его перезапишем
+    msg: "{{ ssl_csr_file }} уже был создан, но мы его перезапишем"
   when: csr_file_stat
 
 - name: "Check if certificate exists for domain"
@@ -29,7 +29,7 @@
   register: cert_file_stat
 
 - debug:
-    msg: "{{ ssl_key_file }}" уже был создан, но мы его перезапишем
+    msg: "{{ ssl_key_file }} уже был создан, но мы его перезапишем"
   when: csr_file_stat
 
 - name: "Generate private key for domain"
