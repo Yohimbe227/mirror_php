@@ -32,7 +32,7 @@
 
 - name: Deploy WordPress with Docker Compose
   community.docker.docker_compose_v2:
-    project_src: /opt/wordpress
+    project_src: /opt/wordpress/docker-compose.yml
     state: present
     timeout: 300
   register: compose_result
