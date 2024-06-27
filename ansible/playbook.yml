@@ -2,6 +2,12 @@
 - hosts: all
   become: yes
   roles:
-    - docker
-    - nginx
+    - role: nginx
+      tags: nginx
+
+
+    - role: docker
+      tags: docker
+
+
 #    - wordpress

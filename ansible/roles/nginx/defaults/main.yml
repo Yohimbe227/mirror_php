@@ -1,3 +1,3 @@
 ---
-ssl_domain: "yohimbe25-proxied-students.devboxops.xyz"
+ssl_domain: "yohimbe25-students.devboxops.xyz"
 is_selfsigned_cert: true
