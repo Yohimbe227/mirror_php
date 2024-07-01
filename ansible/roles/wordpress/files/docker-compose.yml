@@ -10,7 +10,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
 
   nginx:
-    image: nginxinc/nginx-unprivileged
+    image: nginx:alpine
     ports:
       - "8080:80"
     volumes:
