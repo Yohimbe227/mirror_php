@@ -18,9 +18,7 @@ services:
       - "8080:80"
     volumes:
       - /opt/wordpress/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt/1246138045414244484-students.devboxops.xyz/self_signed.crt:/etc/letsencrypt/1246138045414244484-students.devboxops.xyz/self_signed.crt
-      - /etc/letsencrypt/1246138045414244484-students.devboxops.xyz/self_signed.csr:/etc/letsencrypt/1246138045414244484-students.devboxops.xyz/self_signed.csr,
-      - /etc/letsencrypt/1246138045414244484-students.devboxops.xyz/self_signed.key:/etc/letsencrypt/1246138045414244484-students.devboxops.xyz/self_signed.key,
+      - /etc/letsencrypt:/etc/letsencrypt:ro
 
       - wordpress_data:/var/www/html
     depends_on:
