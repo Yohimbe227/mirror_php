@@ -67,8 +67,8 @@
     src: nginx_template.j2
     dest: "{{ config_file }}"
     mode: "0644"
-  notify:
-    - Restart nginx 2
+#  notify:
+#    - Restart nginx 2
 
 - name: Ensure self-signed certificate renewal in cron
   cron:
