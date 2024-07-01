@@ -1,4 +1,6 @@
 ---
+- import_tasks: "collection_install.yml"
+
 - import_tasks: "ssh-copy.yml"
   when: configure_ssh | default(false) | bool
 - import_tasks: "firewall.yml"

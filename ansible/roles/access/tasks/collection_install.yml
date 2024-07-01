@@ -1,0 +1,10 @@
+---
+- name: Install required collections
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install collections
+      ansible.builtin.command:
+        cmd: ansible-galaxy collection install -r ../requirements.yml
+      changed_when: false

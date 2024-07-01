@@ -12,43 +12,6 @@
     state: present
   when: ansible_facts['os_family'] == 'RedHat'
 
-- name: Create ipset whitelist
-  file:
-    path: /etc/ipset.d/whitelist
-    state: touch
-
-- name: Add IP addresses to ipset whitelist
-  ansible.posix.ipset:
-    name: whitelist
-    entry: "{{ item }}"
-    state: present
-  loop: "{{ whitelist_ips }}"
-  notify: Save ipset list to file
-
-- name: Create systemd service for loading ipset on startup
-  copy:
-    dest: /etc/systemd/system/ipset-whitelist.service
-    content: |
-      [Unit]
-      Description=Load ipset whitelist
-      After=network.target
-
-      [Service]
-      Type=oneshot
-      ExecStart=/sbin/ipset restore < /etc/ipset.d/whitelist
-      RemainAfterExit=true
-
-      [Install]
-      WantedBy=multi-user.target
-  notify: Reload systemd daemon
-
-- name: Allow traffic from whitelist IPs
-  iptables:
-    chain: INPUT
-    source: 'ipset:whitelist'
-    jump: ACCEPT
-  notify: Save iptables rules
-
 - name: Allow HTTP traffic
   iptables:
     chain: INPUT
