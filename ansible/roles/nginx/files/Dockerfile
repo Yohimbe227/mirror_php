@@ -1,15 +1,9 @@
-FROM nginx:latest
+FROM debian:bookworm-slim
 
-# Add the Debian backports and main repositories
+# Install Nginx and the required modules
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    && add-apt-repository 'deb http://deb.debian.org/debian bookworm main contrib non-free' \
-    && add-apt-repository 'deb http://deb.debian.org/debian bookworm-updates main contrib non-free' \
-    && add-apt-repository 'deb http://deb.debian.org/debian-security bookworm-security main contrib non-free' \
-    && apt-get update
-
-# Install nginx-full and required modules
-RUN apt-get update && apt-get install -y nginx-full \
+    nginx \
+    nginx-full \
     libnginx-mod-http-auth-pam \
     libnginx-mod-http-dav-ext \
     libnginx-mod-http-echo \
@@ -22,9 +16,12 @@ RUN apt-get update && apt-get install -y nginx-full \
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Copy Nginx configuration files if needed
+# COPY nginx.conf /etc/nginx/nginx.conf
+# COPY fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
+
 # Expose ports
 EXPOSE 80 443
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
-
