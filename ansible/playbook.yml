@@ -5,7 +5,7 @@
     - role: access
       tags: access
 
-      port: 2220
+      ssh_port: 2222
 
       configure_ssh: true
       configure_firewall: true
