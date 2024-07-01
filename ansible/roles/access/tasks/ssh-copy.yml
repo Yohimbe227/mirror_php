@@ -36,7 +36,7 @@
       lineinfile:
         path: /etc/ssh/sshd_config
         regexp: '^#?Port'
-        line: 'Port 2220'
+        line: 'Port {{ ssh_port }}'
         state: present
       register: ssh_port_change
   vars:
@@ -50,14 +50,14 @@
 - name: Allow new SSH port through firewall (if using ufw)
   ufw:
     rule: allow
-    port: "{{ port }}"
+    port: "{{ ssh_port }}"
     proto: tcp
   when: ansible_facts['os_family'] == 'Debian'
   notify: Reload ufw
 
 - name: Allow new SSH port through firewall (if using firewalld)
   firewalld:
-    port: 2220/tcp
+    port: "{{ ssh_port }}"/tcp
     permanent: yes
     state: enabled
   when: ansible_facts['os_family'] == 'RedHat'

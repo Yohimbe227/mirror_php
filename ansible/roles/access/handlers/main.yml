@@ -1,17 +1,8 @@
 ---
-  - name: Save ipset list to file
-    shell: ipset save > /etc/ipset.d/whitelist
-    notify: Restart ipset whitelist service
-
   - name: Reload systemd daemon
     systemd:
       daemon_reload: yes
     notify: Restart ipset whitelist service
-
-  - name: Restart ipset whitelist service
-    systemd:
-      name: ipset-whitelist.service
-      state: restarted
 
   - name: Save iptables rules (Debian/Ubuntu)
     shell: iptables-save > /etc/iptables/rules.v4
