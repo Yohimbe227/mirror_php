@@ -16,7 +16,7 @@
   iptables:
     chain: INPUT
     protocol: tcp
-    port: 80
+    destination_port: 80
     jump: ACCEPT
   notify: Save iptables rules
 
@@ -24,14 +24,6 @@
   iptables:
     chain: INPUT
     protocol: tcp
-    port: 443
-    jump: ACCEPT
-  notify: Save iptables rules
-
-- name: Allow established and related connections
-  iptables:
-    chain: INPUT
-    match: state
-    state: RELATED,ESTABLISHED
+    destination_port: 443
     jump: ACCEPT
   notify: Save iptables rules
