@@ -22,7 +22,6 @@
     dest: /etc/fail2ban/jail.local
     content: |
       [DEFAULT]
-      ignoreip = {{ whitelist_ips | join(' ') }}
       bantime  = 600
       findtime  = 600
       maxretry = 3
