@@ -4,7 +4,7 @@
     name: iptables-persistent
     state: present
     update_cache: yes
-  when: ansible_facts['os_family'] == 'Debian' and enable_whitelist
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install iptables-services if not present (RedHat/CentOS)
   yum:
