@@ -18,6 +18,12 @@
     dest: /opt/wordpress/nginx/Dockerfile
     mode: '0644'
 
+- name: Copy fastcgi-php.conf
+  copy:
+    src: files/fastcgi-php.conf
+    dest: /opt/wordpress/nginx/fastcgi-php.conf
+    mode: '0644'
+
 - name: "Check if private key exists for domain"
   stat:
     path: "{{ ssl_key_file }}"
