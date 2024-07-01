@@ -6,6 +6,7 @@
       tags: access
 
       port: 2220
+
       configure_ssh: true
       configure_firewall: true
       configure_fail2ban: true

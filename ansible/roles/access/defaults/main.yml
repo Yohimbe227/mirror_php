@@ -3,3 +3,4 @@ whitelist_ips:
   - 62.76.36.250
 ssh_key: false
 port: 22
+username: "root"
