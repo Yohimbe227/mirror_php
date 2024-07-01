@@ -1,0 +1,57 @@
+---
+- name: Копировать публичный SSH-ключ на хосты для созданных пользователей
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ lookup('file', ssh_keys) }}"
+    state: present
+  become: true
+
+- name: Configure SSH settings
+  block:
+    - name: Ensure SSH password authentication is disabled
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+        state: present
+
+    - name: Ensure SSH key-based authentication is enabled
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PubkeyAuthentication'
+        line: 'PubkeyAuthentication yes'
+        state: present
+
+    - name: Ensure ChallengeResponseAuthentication is disabled
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?ChallengeResponseAuthentication'
+        line: 'ChallengeResponseAuthentication no'
+        state: present
+
+    - name: Ensure the new SSH port is configured
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?Port'
+        line: 'Port 2220'
+        state: present
+  vars:
+    ansible_become: yes
+  notify: Restart SSH
+  register: ssh_config_changes
+
+- name: Allow new SSH port through firewall (if using ufw)
+  ufw:
+    rule: allow
+    port: "{{ port }}"
+    proto: tcp
+  when: ansible_facts['os_family'] == 'Debian'
+  notify: Reload ufw
+
+- name: Allow new SSH port through firewall (if using firewalld)
+  firewalld:
+    port: 2220/tcp
+    permanent: yes
+    state: enabled
+  when: ansible_facts['os_family'] == 'RedHat'
+  notify: Reload firewalld
