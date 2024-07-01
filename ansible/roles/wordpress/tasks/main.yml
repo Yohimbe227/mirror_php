@@ -5,17 +5,12 @@
     state: directory
     mode: '0755'
 
-- name: Copy docker-compose.yml
+- name: Copy all files from source to destination directory
   copy:
-    src: files/docker-compose.yml
-    dest: /opt/wordpress/docker-compose.yml
-    mode: '0644'
-
-- name: Copy Dockerfile
-  copy:
-    src: files/Dockerfile
-    dest: /opt/wordpress/Dockerfile
-    mode: '0644'
+    src: "{{ item }}"
+    dest: "/opt/wordpress/"
+  with_fileglob:
+    - "./files/*"
 
 - name: Install pip
   apt:
