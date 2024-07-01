@@ -5,12 +5,11 @@
     state: directory
     mode: '0755'
 
-- name: Copy all files from source to destination directory
-  copy:
-    src: "{{ item }}"
+- name: Synchronize all files including hidden ones
+  synchronize:
+    src: "files/"
     dest: "/opt/wordpress/"
-  with_fileglob:
-    - "./files/*"
+    recursive: yes
 
 - name: Install pip
   apt:
