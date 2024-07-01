@@ -14,6 +14,7 @@
         regexp: '^#?PasswordAuthentication'
         line: 'PasswordAuthentication no'
         state: present
+      register: ssh_password_auth
 
     - name: Ensure SSH key-based authentication is enabled
       lineinfile:
@@ -21,6 +22,7 @@
         regexp: '^#?PubkeyAuthentication'
         line: 'PubkeyAuthentication yes'
         state: present
+      register: ssh_pubkey_auth
 
     - name: Ensure ChallengeResponseAuthentication is disabled
       lineinfile:
@@ -28,6 +30,7 @@
         regexp: '^#?ChallengeResponseAuthentication'
         line: 'ChallengeResponseAuthentication no'
         state: present
+      register: ssh_challenge_auth
 
     - name: Ensure the new SSH port is configured
       lineinfile:
@@ -35,10 +38,14 @@
         regexp: '^#?Port'
         line: 'Port 2220'
         state: present
+      register: ssh_port_change
   vars:
     ansible_become: yes
   notify: Restart SSH
-  register: ssh_config_changes
+
+- name: Check if SSH config changed
+  set_fact:
+    ssh_config_changed: "{{ ssh_password_auth.changed or ssh_pubkey_auth.changed or ssh_challenge_auth.changed or ssh_port_change.changed }}"
 
 - name: Allow new SSH port through firewall (if using ufw)
   ufw:
