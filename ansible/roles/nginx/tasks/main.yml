@@ -11,6 +11,13 @@
     state: directory
     mode: '0755'
 
+
+- name: Copy Dockerfile
+  copy:
+    src: files/Dockerfile
+    dest: /opt/wordpress/nginx/Dockerfile
+    mode: '0644'
+
 - name: "Check if private key exists for domain"
   stat:
     path: "{{ ssl_key_file }}"
@@ -67,8 +74,6 @@
     src: nginx_template.j2
     dest: "{{ config_file }}"
     mode: "0644"
-#  notify:
-#    - Restart nginx 2
 
 - name: Ensure self-signed certificate renewal in cron
   cron:
