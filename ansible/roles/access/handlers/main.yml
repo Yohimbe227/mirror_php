@@ -47,3 +47,10 @@
     service:
       name: firewalld
       state: reloaded
+
+  - name: Restart fail2ban
+    systemd:
+      name: fail2ban
+      state: restarted
+      enabled: yes
+    listen: "restart fail2ban"
