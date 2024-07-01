@@ -1,0 +1,5 @@
+whitelist_ips:
+  - 185.244.48.124
+  - 62.76.36.250
+ssh_key: false
+port: 22

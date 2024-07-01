@@ -31,21 +31,3 @@
     project_name: wordpress
     timeout: 300
   register: compose_result
-#
-#- name: Debug Docker Compose result
-#  debug:
-#    var: compose_result
-#
-#- name: Check container status
-#  community.docker.docker_container_info:
-#    name: "{{ item }}"
-#  loop:
-#    - wordpress-db-1
-#    - wordpress-wordpress-1
-#    - wordpress-nginx-1
-#  register: container_info
-#
-#- name: Display container status
-#  debug:
-#    msg: "Container {{ item.container.Name }} is {{ item.container.State.Status }}"
-#  loop: "{{ container_info.results }}"
