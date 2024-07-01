@@ -16,7 +16,7 @@
   iptables:
     chain: INPUT
     protocol: tcp
-    dport: 80
+    port: 80
     jump: ACCEPT
   notify: Save iptables rules
 
@@ -24,7 +24,7 @@
   iptables:
     chain: INPUT
     protocol: tcp
-    dport: 443
+    port: 443
     jump: ACCEPT
   notify: Save iptables rules
 
