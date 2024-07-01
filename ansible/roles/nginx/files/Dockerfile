@@ -1,2 +1,2 @@
 FROM nginx:latest
-RUN apt-get update && apt-get install -y nginx-full
+COPY fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
