@@ -13,7 +13,7 @@ services:
     image: nginx:latest
     build:
       context: ./nginx
-      dockerfile: Dockerfile
+      dockerfile: ../../docker_install/files/Dockerfile
     ports:
       - "80:80"
       - "443:443"
