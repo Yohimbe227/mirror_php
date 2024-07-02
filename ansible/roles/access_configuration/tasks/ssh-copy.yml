@@ -41,11 +41,16 @@
       register: ssh_port_change
   vars:
     ansible_become: yes
-  notify: Restart SSH
+
+- name: Set new SSH port for Ansible
+  set_fact:
+    ansible_ssh_common_args: '-o Port={{ ssh_port }}'
+  when: ssh_port_change | default(false)
 
 - name: Check if SSH config changed
   set_fact:
     ssh_config_changed: "{{ ssh_password_auth.changed or ssh_pubkey_auth.changed or ssh_challenge_auth.changed or ssh_port_change.changed }}"
+  notify: Restart SSH
 
 - name: Allow new SSH port through firewall (if using ufw)
   ufw:

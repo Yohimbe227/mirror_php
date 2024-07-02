@@ -1,7 +1,0 @@
----
-- name: Install required collections
-  ansible.builtin.command:
-    cmd: ansible-galaxy collection install -r "{{ playbook_dir }}/../requirements.yml"
-  delegate_to: localhost
-  run_once: true
-  changed_when: false

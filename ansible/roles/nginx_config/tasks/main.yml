@@ -11,13 +11,6 @@
     state: directory
     mode: '0755'
 
-
-- name: Copy Dockerfile
-  copy:
-    src: files/Dockerfile
-    dest: /opt/wordpress/nginx/Dockerfile
-    mode: '0644'
-
 - name: Copy fastcgi-php.conf
   copy:
     src: files/fastcgi-php.conf
