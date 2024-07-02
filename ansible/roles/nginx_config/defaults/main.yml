@@ -3,10 +3,6 @@ servername: "1246138045414244484-students.devboxops.xyz"
 is_selfsigned_cert: true
 nginx_selfsigned_cert_renewal: true
 
-packages:
-  - nginx
-  - htop
-  - tree
 nginx_template: "./templates/nginx_template.j2"
 
 ssl_dir: "/etc/letsencrypt"

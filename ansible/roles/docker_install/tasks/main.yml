@@ -33,15 +33,3 @@
     name: docker
     state: started
     enabled: yes
-
-- name: Create project directory
-  file:
-    path: /opt/wordpress/nginx
-    state: directory
-    mode: '0755'
-
-- name: Copy Dockerfile
-  copy:
-    src: files/Dockerfile
-    dest: /opt/wordpress/nginx/Dockerfile
-    mode: '0644'
